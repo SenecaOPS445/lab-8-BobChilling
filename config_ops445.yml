@@ -1,0 +1,62 @@
+---
+- hosts: wcao23
+  user: student
+  become: yes
+
+  vars:
+    apache_version: 2.6
+    motd_warning: "WARNING: used by ICT faculty/students only.\n"
+    testserver: yes
+
+  tasks:
+    - name: update apache
+      yum:
+        name: httpd
+        state: latest   
+
+    - name: restart apache
+      service: 
+        name: httpd
+        state: restarted
+
+    - name: install EPEL
+      yum:
+        name: epel-release
+        state: present
+
+    - name: remove tree package
+      yum:
+        name: tree
+        state: absent
+
+    - name: set hostname
+      hostname:
+        name: "wcao23"
+
+    - name: new sudo account
+      user:
+        name: "wcao23"
+        group: wheel
+        append: yes
+        shell: /bin/bash
+
+    - name: no password ssh
+      copy: 
+        dest: "etc/sudoers.d/10-ops445-users"
+        content: "wcao23 ALL=(ALL) NOPASSWD:ALL"
+        mode: 0440
+
+    - name: ssh key
+      authorized_key:
+        user: "wcao23"
+        state: present
+        key: "{{ lookup('file', '/home/student/.ssh/id_ed25519') }}"
+
+    - name: create dir using loop
+      file:
+        path: "/home/wcao23/ops445/lab{{ item }}"
+        state: directory
+        owner: "wcao23"
+        group: "wcao23"
+      loop: "{{ range(1, 9)|list }}"
+        
