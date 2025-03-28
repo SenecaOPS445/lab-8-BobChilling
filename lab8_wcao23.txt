@@ -1,0 +1,30 @@
+
+PLAY [wcao23] ******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [wcao23]
+
+TASK [update apache] ***********************************************************
+ok: [wcao23]
+
+TASK [restart apache] **********************************************************
+changed: [wcao23]
+
+TASK [install EPEL] ************************************************************
+ok: [wcao23]
+
+TASK [remove tree package] *****************************************************
+ok: [wcao23]
+
+TASK [set hostname] ************************************************************
+ok: [wcao23]
+
+TASK [new sudo account] ********************************************************
+ok: [wcao23]
+
+TASK [no password ssh] *********************************************************
+fatal: [wcao23]: FAILED! => {"changed": false, "checksum": "2d78365a2450d4f000ecf01ff7b0a77372c1c38e", "msg": "Destination directory etc/sudoers.d does not exist"}
+
+PLAY RECAP *********************************************************************
+wcao23                     : ok=7    changed=1    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+

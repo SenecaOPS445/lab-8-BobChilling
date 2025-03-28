@@ -1,0 +1,2 @@
+[ops445]
+wcao23 ansible_host=myvmlab.senecapolytechnic.ca ansible_port=7437 ansible_user=student
